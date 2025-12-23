@@ -2,7 +2,8 @@
 Test configuration and fixtures
 """
 import pytest
-from app.main import create_app, db
+from app.main import create_app
+from app.extensions import db
 
 @pytest.fixture
 def app():

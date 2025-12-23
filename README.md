@@ -91,7 +91,7 @@ python app/main.py
 ```bash
 cd frontend
 npm install
-npm start
+npm run dev
 ```
 
 4. 使用Docker (Using Docker)

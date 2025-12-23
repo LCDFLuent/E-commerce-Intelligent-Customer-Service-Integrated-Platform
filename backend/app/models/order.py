@@ -1,7 +1,7 @@
 """
 Order model
 """
-from app.main import db
+from app.extensions import db
 from datetime import datetime
 
 class Order(db.Model):

@@ -4,18 +4,14 @@ Main application entry point
 """
 from flask import Flask, jsonify
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
-from flask_jwt_extended import JWTManager
 from flasgger import Swagger
 import os
 from dotenv import load_dotenv
 
+from app.extensions import db, jwt
+
 # Load environment variables
 load_dotenv()
-
-# Initialize extensions
-db = SQLAlchemy()
-jwt = JWTManager()
 
 def create_app(config_name='default'):
     """Application factory pattern"""

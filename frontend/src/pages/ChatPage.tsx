@@ -38,7 +38,7 @@ const ChatPage: React.FC = () => {
     // Simulate bot response
     setTimeout(() => {
       const botResponse: Message = {
-        id: messages.length + 2,
+        id: Date.now(), // Use timestamp to avoid ID conflicts
         text: `收到您的消息："${inputMessage}"。我们的AI助手正在开发中！`,
         sender: 'bot',
         timestamp: new Date()
