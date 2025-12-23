@@ -25,9 +25,10 @@ const ChatPage: React.FC = () => {
   const handleSend = () => {
     if (!inputMessage.trim()) return
 
+    const userMessageText = inputMessage // Store for bot response
     const newMessage: Message = {
-      id: messages.length + 1,
-      text: inputMessage,
+      id: Date.now(), // Use timestamp for unique IDs
+      text: userMessageText,
       sender: 'user',
       timestamp: new Date()
     }
@@ -38,8 +39,8 @@ const ChatPage: React.FC = () => {
     // Simulate bot response
     setTimeout(() => {
       const botResponse: Message = {
-        id: Date.now(), // Use timestamp to avoid ID conflicts
-        text: `收到您的消息："${inputMessage}"。我们的AI助手正在开发中！`,
+        id: Date.now() + 1, // Ensure different ID
+        text: `收到您的消息："${userMessageText}"。我们的AI助手正在开发中！`,
         sender: 'bot',
         timestamp: new Date()
       }

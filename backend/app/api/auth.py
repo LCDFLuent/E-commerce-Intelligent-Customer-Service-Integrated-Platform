@@ -39,12 +39,32 @@ def register():
     """
     data = request.get_json()
     
+    # Validate required fields
+    if not data:
+        return jsonify({'error': 'Request body is required'}), 400
+    
+    username = data.get('username')
+    email = data.get('email')
+    password = data.get('password')
+    
+    if not username or not email or not password:
+        return jsonify({'error': 'Username, email, and password are required'}), 400
+    
+    if len(username) < 3:
+        return jsonify({'error': 'Username must be at least 3 characters'}), 400
+    
+    if '@' not in email:
+        return jsonify({'error': 'Invalid email address'}), 400
+    
+    if len(password) < 6:
+        return jsonify({'error': 'Password must be at least 6 characters'}), 400
+    
     # TODO: Implement user registration logic
-    # For now, return success response
+    # Check if user already exists, hash password, save to database
     
     return jsonify({
         'message': 'User registered successfully',
-        'username': data.get('username')
+        'username': username
     }), 201
 
 @bp.route('/login', methods=['POST'])
@@ -75,11 +95,24 @@ def login():
         description: Invalid credentials
     """
     data = request.get_json()
+    
+    if not data:
+        return jsonify({'error': 'Request body is required'}), 400
+    
     username = data.get('username')
     password = data.get('password')
     
+    if not username or not password:
+        return jsonify({'error': 'Username and password are required'}), 400
+    
     # TODO: Implement proper authentication
-    # For now, create token for demo
+    # - Query user from database
+    # - Verify password hash
+    # - Return 401 if authentication fails
+    # For demo purposes, creating token with warning comment
+    
+    # SECURITY WARNING: This is a placeholder implementation
+    # In production, validate credentials against database before creating token
     
     access_token = create_access_token(identity=username)
     

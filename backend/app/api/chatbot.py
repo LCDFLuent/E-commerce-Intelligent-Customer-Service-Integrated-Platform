@@ -3,6 +3,7 @@ Chatbot API endpoints
 """
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from datetime import datetime
 
 bp = Blueprint('chatbot', __name__)
 
@@ -38,7 +39,15 @@ def send_message():
         description: Invalid input
     """
     data = request.get_json()
+    
+    if not data:
+        return jsonify({'error': 'Request body is required'}), 400
+    
     user_message = data.get('message')
+    
+    if not user_message or not user_message.strip():
+        return jsonify({'error': 'Message is required and cannot be empty'}), 400
+    
     session_id = data.get('session_id', 'default')
     
     # TODO: Implement AI chatbot logic
@@ -49,7 +58,7 @@ def send_message():
     return jsonify({
         'response': bot_response,
         'session_id': session_id,
-        'timestamp': '2024-01-01T00:00:00Z'
+        'timestamp': datetime.utcnow().isoformat() + 'Z'
     }), 200
 
 @bp.route('/history/<session_id>', methods=['GET'])
